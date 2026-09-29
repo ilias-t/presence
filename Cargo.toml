@@ -1,0 +1,22 @@
+[workspace]
+resolver = "2"
+members = ["crates/presence-dsp", "crates/presence-engine", "crates/presence"]
+
+[workspace.package]
+version = "0.1.0"
+edition = "2024"
+license = "MIT OR Apache-2.0"
+rust-version = "1.88"
+authors = ["Ilias Tsangaris"]
+repository = "https://github.com/ilias-t/presence"
+homepage = "https://github.com/ilias-t/presence"
+
+[workspace.dependencies]
+presence-dsp = { path = "crates/presence-dsp" }
+presence-engine = { path = "crates/presence-engine" }
+serde = { version = "1", features = ["derive"] }
+thiserror = "2"
+anyhow = "1"
+
+[profile.release]
+lto = "thin"

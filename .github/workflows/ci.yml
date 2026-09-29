@@ -1,0 +1,42 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  CARGO_TERM_COLOR: always
+
+jobs:
+  check:
+    name: fmt, clippy, test
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v7
+
+      # No `toolchain` input: installs the channel and components pinned in
+      # rust-toolchain.toml.
+      - uses: actions-rust-lang/setup-rust-toolchain@v2
+        with:
+          cache: false
+
+      - uses: Swatinem/rust-cache@v2
+
+      - name: Format
+        run: cargo fmt --all --check
+
+      - name: Clippy
+        run: cargo clippy --workspace --all-targets -- -D warnings
+
+      # Tests never open audio devices or need microphone permission, so they
+      # run on hosted runners (which have neither).
+      - name: Test
+        run: cargo test --workspace

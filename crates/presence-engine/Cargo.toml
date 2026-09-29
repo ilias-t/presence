@@ -1,0 +1,21 @@
+[package]
+name = "presence-engine"
+description = "Audio engine: capture mic, run presence-dsp, play to a virtual device"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+rust-version.workspace = true
+authors.workspace = true
+repository.workspace = true
+homepage.workspace = true
+
+[dependencies]
+presence-dsp.workspace = true
+thiserror.workspace = true
+cpal = "0.16"
+rtrb = "0.4.0"
+triple_buffer = "9.0.0"
+
+[target.'cfg(target_os = "macos")'.dependencies]
+# Mic-free HAL queries (see src/hal.rs). cpal 0.16 itself uses objc2-core-audio.
+coreaudio-sys = { version = "0.2", default-features = false, features = ["core_audio"] }
