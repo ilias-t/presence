@@ -18,8 +18,8 @@ presence-engine.workspace = true
 serde.workspace = true
 anyhow.workspace = true
 clap = { version = "4", features = ["derive"] }
-ratatui = "0.29"
-crossterm = "0.28"
+ratatui = "0.30"
+crossterm = "0.29"
 toml = "1.1.6"
 dirs = "7.0.0"
 rustfft = "6.4.1"
